@@ -1,0 +1,28 @@
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.fullwidth {
+  width:100%;
+  flex: auto;
+}
+
+.spanscreen {
+    max-width: 90% !important;
+    padding: auto;
+
+   }
+.redback {
+    background-color: #ff04b4 !important;
+
+   }
+
+.rightfont {
+  font-family: Montserrat,sans-serif !important;
+  font-size: 30px;
+}
+
+.headerfont {
+  font-family: Montserrat,sans-serif !important;
+  font-size: 75px;
+  color: #ff04b4;
+}

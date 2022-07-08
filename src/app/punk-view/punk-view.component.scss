@@ -1,0 +1,24 @@
+.fullwidth {
+  width:100%;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  min-width: 200px;
+}
+
+.fillbox {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+}
+
+.rightfont2 {
+  font-family: Montserrat,sans-serif !important;
+  font-size: 35px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.spinnercolor {
+  stroke: darkred;
+}
