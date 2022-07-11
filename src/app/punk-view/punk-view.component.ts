@@ -59,11 +59,11 @@ export class PunkViewComponent implements OnInit {
 
   // events
   public chartClicked({ event, active }: { event?: ChartEvent | undefined , active?: {}[] }): void {
-    console.log(event, active);
+
   }
 
   public chartHovered({ event, active }: { event: ChartEvent | undefined, active: {}[] }): void {
-    console.log(event, active);
+
   }
 
   cols = 1;
@@ -163,7 +163,7 @@ export class PunkViewComponent implements OnInit {
         .valueChanges.subscribe((result: any) => {
           console.log(result?.data);
           this.punksList = this.punksList.concat(result?.data?.punks);
-          this.owners = this.getOwnersArray();
+         // this.owners = this.getOwnersArray();
         });
         await this.apollo
       .watchQuery({
@@ -215,21 +215,23 @@ export class PunkViewComponent implements OnInit {
     if(this.punksList){
       for(let i=0; i< this.punksList.length; i++){
         const punk = this.punksList[i];
-        let array = owners.get(punk.owner.id);
+        const ownerNickname = this.getNickname(punk.owner.id);
+        let array = owners.get(ownerNickname);
         if(!array){
           array = [];
         }
 
         array.push(punk.id);
 
-        owners.set(punk.owner.id, array);
+        owners.set(ownerNickname, array);
       }
     }
     console.log('the owners are');
     console.log([...owners.entries()]);
-    if([...owners.entries()].length > 100) {
+    this.owners = owners;
+   // if([...owners.entries()].length > 100) {
       this.setChart([...owners.entries()]);
-    }
+   // }
     return owners;
   }
 
@@ -245,21 +247,30 @@ export class PunkViewComponent implements OnInit {
 
       }
 
-      var n = dataset.slice(0).sort((n1,n2) => n1 - n2)
-      var a = [];
-      for (var x in n)
-      {
-      let i: any = dataset.indexOf(n[x]);
-      a.push(keys[i]);
-      dataset[i] = null;
-      }
-      dataset = n
-      keys = a
+       var temp;
 
-      this.pieChartData.labels = Array.from(this.owners.keys());
+      for (var i = 0; i < dataset.length; i++) {
+        for (var j = i + 1; j < dataset.length; j++) {
+            if (dataset[i] > dataset[j]) {
+                temp = dataset[i];
+                dataset[i] = dataset[j];
+                dataset[j] = temp;
+
+                temp = keys[i];
+                keys[i] = keys[j];
+                keys[j] = temp;
+            }
+        }
+    }
+
+      this.pieChartData.labels = keys;
+      //this.pieChartData.labels = Array.from(this.owners.keys());
       this.pieChartData.datasets =  [ {
         data: dataset
        } ];
+      console.log('the owners are');
+      console.log(keys);
+      console.log(dataset);
     }
   }
 
@@ -290,4 +301,20 @@ export class PunkViewComponent implements OnInit {
   // public chartHovered(e: any): void {
   //   console.log(e);
   // }
+
+  getNickname(owner: string){
+    let owners = new Map<string, string>;
+    owners.set('0xa858ddc0445d8131dac4d1de01f834ffcba52ef1', 'Yuga Labs');
+    owners.set('0x26f744711ee9e5079cbeaf318ba8a8e938844de6', 'smithdavid888.eth');
+    owners.set('0x6301add4fb128de9778b8651a2a9278b86761423', 'athrab.eth');
+    owners.set('0x030defb961d3f3480a574cedf6ead227a7a8106b', 'superpleb.eth');
+    owners.set('0xc24f574d6853f6f6a31c19d468a8c1b3f31c0e54', 'shilpixels.eth');
+    owners.set('0x783ca9833d58a6b39ee72db81f07571d72c0064e', 'pjcurly.eth');
+    owners.set('0x94de7e2c73529ebf3206aa3459e699fbcdfcd49b', 'tonyherrera.eth');
+    const nickname = owners.get(owner);
+    if(nickname){
+      return nickname;
+    }
+    return owner;
+  }
 }
