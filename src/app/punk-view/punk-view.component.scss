@@ -17,8 +17,47 @@
   font-size: 35px;
   margin-left: 20px;
   margin-right: 20px;
+  text-align: center;
 }
 
 .spinnercolor {
   stroke: darkred;
+}
+
+::ng-deep .mat-select-value {
+  font-size: 35px;
+  font-family: Montserrat, sans-serif;
+}
+
+::ng-deep .mat-paginator-range-actions {
+  font-size: 35px;
+  font-family: Montserrat, sans-serif;
+}
+
+::ng-deep .mat-paginator-page-size-label {
+  font-size: 35px;
+  font-family: Montserrat, sans-serif;
+}
+
+::ng-deep .canvas {
+  font-size: 35px;
+  font-family: Montserrat, sans-serif;
+}
+
+::ng-deep .mat-option-text {
+  font-size: 35px;
+  font-family: Montserrat, sans-serif;
+}
+.pinkback {
+  background-color: #ff04b4;
+  font-family: Montserrat,sans-serif !important;
+  font-size: 60px;
+  padding: 30px;
+  text-align: center;
+  color: white
+}
+
+.piewidth{
+  width: 40% !important;
+  height: 40% !important;
 }

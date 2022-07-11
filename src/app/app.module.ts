@@ -13,6 +13,8 @@ import {PunkTileComponent} from "./punk-view/punk-tile/punk-tile.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {NgChartsModule } from 'ng2-charts';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatCardModule,
     MatGridListModule,
     MatPaginatorModule,
+    NgChartsModule,
+    FormsModule
   ],
   providers: [
         {

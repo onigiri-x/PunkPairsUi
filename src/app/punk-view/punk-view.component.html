@@ -10,7 +10,7 @@
 <p class="rightfont2">Punk pairs are the solution to the popular argument, is the original token more valuable or it's commonly traded counterpart?</p>
 <br>
 <br>
-<p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}}</strong> Punk Pairs. Browse them here:</p>
+<p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here:</p>
 <br>
 
 
@@ -24,7 +24,25 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-paginator [length]="punksList.length" pageSize=24
+<mat-paginator class = "paginator1" [length]="punksList.length" pageSize=24
                (page)="getPaginatorData($event)" [pageSizeOptions]="[24, 80, 240]"
                showFirstLastButtons="false" class="fullwidth">
 </mat-paginator>
+<br>
+<br>
+<h1 class="pinkback">Top Punk Pair Hodlers</h1>
+<br>
+<br>
+<p class="rightfont2" *ngIf="!loading">There are currently <strong> {{getNumberOfOwners()}} Hodlers </strong> in total with Punk Pairs</p>
+<br>
+<div class="chart-wrapper" class="piewidth" *ngIf="!loading" >
+     <canvas baseChart
+              [data]="pieChartData"
+              [type]="pieChartType"
+              [options]="pieChartOptions"
+              [plugins]="pieChartPlugins"
+              (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+      </canvas>
+
+</div>
