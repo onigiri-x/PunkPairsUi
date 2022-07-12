@@ -58,6 +58,18 @@
 }
 
 .piewidth{
-  width: 40% !important;
-  height: 40% !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.example-container {
+  height: calc(100% - 40px);
+  width: calc(75% - 40px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-table {
+  width: 100%;
+  overflow: auto;
 }

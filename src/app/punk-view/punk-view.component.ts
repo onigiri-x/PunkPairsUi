@@ -15,7 +15,6 @@ export class PunkViewComponent implements OnInit {
   @ViewChild( BaseChartDirective ) chart: BaseChartDirective | undefined;
   public dataSource: any;
   title = 'app';
-
   // Pie
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -69,6 +68,9 @@ export class PunkViewComponent implements OnInit {
   cols = 1;
   loading = true;
   owners: Map<string, number[]> | undefined;
+
+  columnsToDisplay = ['Addresses', 'NumberOfPunks'];
+  myTableDataArray: any;
 
   gridByBreakpoint = {
     xl: 8,
@@ -165,7 +167,7 @@ export class PunkViewComponent implements OnInit {
           this.punksList = this.punksList.concat(result?.data?.punks);
          // this.owners = this.getOwnersArray();
         });
-        await this.apollo
+    this.apollo
       .watchQuery({
         query: gql`
           {
@@ -236,6 +238,7 @@ export class PunkViewComponent implements OnInit {
   }
 
   setChart(ownerArray: [string, number[]][]): void{
+    // Pie chart
     if(this.owners) {
       let keys = Array.from(this.owners.keys());
       let dataset = [];
@@ -271,6 +274,12 @@ export class PunkViewComponent implements OnInit {
       console.log('the owners are');
       console.log(keys);
       console.log(dataset);
+
+      // Data table
+      this.myTableDataArray = [];
+      for(let i=0; i<dataset.length ; i++){
+          this.myTableDataArray.push({Addresses: keys[dataset.length - 1 - i], NumberOfPunks: dataset[dataset.length - 1 - i]});
+      }
     }
   }
 

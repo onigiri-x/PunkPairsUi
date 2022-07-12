@@ -15,6 +15,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {NgChartsModule } from 'ng2-charts';
 import {FormsModule} from "@angular/forms";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {FormsModule} from "@angular/forms";
     MatGridListModule,
     MatPaginatorModule,
     NgChartsModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
   providers: [
         {

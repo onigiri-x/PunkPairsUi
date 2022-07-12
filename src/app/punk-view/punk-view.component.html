@@ -35,7 +35,11 @@
 <br>
 <p class="rightfont2" *ngIf="!loading">There are currently <strong> {{getNumberOfOwners()}} Hodlers </strong> in total with Punk Pairs</p>
 <br>
-<div class="chart-wrapper" class="piewidth" *ngIf="!loading" >
+
+<mat-grid-list cols="{{cols >= 4 ? 2 : 1}}">
+  <mat-grid-tile
+      [colspan]="1">
+      <div class="chart-wrapper" class="piewidth" *ngIf="!loading" >
      <canvas baseChart
               [data]="pieChartData"
               [type]="pieChartType"
@@ -44,5 +48,21 @@
               (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)">
       </canvas>
+      </div>
+  </mat-grid-tile>
+  <mat-grid-tile
+      [colspan]="1">
+    <div class="example-container mat-elevation-z8">
+     <mat-table [dataSource] = "myTableDataArray" *ngIf="myTableDataArray && myTableDataArray.length > 0">
+        <mat-text-column name="Addresses"></mat-text-column>
+        <mat-text-column name="NumberOfPunks"></mat-text-column>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    </mat-table>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
 
-</div>
+<mat-card>
+
+</mat-card>
