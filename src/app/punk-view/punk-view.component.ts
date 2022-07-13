@@ -8,14 +8,6 @@ import { BaseChartDirective } from 'ng2-charts';
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
 @Component({
   selector: 'app-punk-view',
   templateUrl: './punk-view.component.html',
@@ -84,7 +76,6 @@ export class PunkViewComponent implements OnInit {
 
   punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1)]);
 
-  matcher = new MyErrorStateMatcher();
 
   gridByBreakpoint = {
     xl: 8,
