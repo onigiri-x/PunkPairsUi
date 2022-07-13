@@ -5,6 +5,16 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import {ErrorStateMatcher} from "@angular/material/core";
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-punk-view',
@@ -71,6 +81,10 @@ export class PunkViewComponent implements OnInit {
 
   columnsToDisplay = ['Addresses', 'NumberOfPunks'];
   myTableDataArray: any;
+
+  punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1)]);
+
+  matcher = new MyErrorStateMatcher();
 
   gridByBreakpoint = {
     xl: 8,

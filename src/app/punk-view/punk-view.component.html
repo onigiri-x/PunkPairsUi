@@ -63,6 +63,25 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<mat-card>
-
-</mat-card>
+<br>
+<br>
+<h1 class="pinkback">Check your Cryptopunk</h1>
+<br>
+<br>
+<p class="rightfont2" *ngIf="!loading">Use the box below to check whether your Punk ID is a Punk Pair</p>
+<br>
+<br>
+<form class="punk-form">
+  <mat-form-field class="punk-width mat-form-field-flex">
+    <mat-label>Punk Id</mat-label>
+    <input type="number" matInput [formControl]="punkFormControl"
+           placeholder="0">
+    <mat-error *ngIf="punkFormControl.hasError('pattern') || punkFormControl.hasError('minLength') || !punkFormControl.hasError('required')">
+      Please enter a valid Punk Token ID
+    </mat-error>
+    <mat-error *ngIf="punkFormControl.hasError('required')">
+      Token ID is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button class="mat-button">Check Punk ID</button>
+</form>
