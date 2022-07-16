@@ -55,9 +55,9 @@
     <div class="example-container mat-elevation-z8">
      <mat-table [dataSource] = "myTableDataArray" *ngIf="myTableDataArray && myTableDataArray.length > 0">
         <mat-text-column name="Addresses"></mat-text-column>
-        <mat-text-column name="NumberOfPunks"></mat-text-column>
+        <mat-text-column name="NumberOfPunks">#</mat-text-column>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+      <tr mat-row class="mat-cell-custom" *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </mat-table>
     </div>
   </mat-grid-tile>
@@ -68,9 +68,24 @@
 <h1 class="pinkback">Check your Cryptopunk</h1>
 <br>
 <br>
+<!-- add loader here -->
 <p class="rightfont2" *ngIf="!loading">Use the box below to check whether your Punk ID is a Punk Pair</p>
 <br>
 <br>
+<mat-card class="punk-form">
+<input [formControl]="punkFormControl" type="text" class="code {{punkFormControl.invalid && punkFormControl.dirty && 'invalid'}} search-field"
+                   placeholder="XXXXXX" maxlength="6">
+            <button class="search-button" mat-button [disabled]="punkFormControl.invalid" type="button"
+                    (click)="callPunkQuery(punkFormControl.value)">
+                Search punk
+            </button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p *ngIf="!validPunkOnForm">Punk is not a valid Cryptopunk Pair</p>
+            <p *ngIf="validPunkOnForm">Punk token id #{{validPunkOnForm}} inputted is a valid token pair owned by {{getPunkOwner(validPunkOnForm)}}</p>
+  </mat-card>
 <!--
 <form class="punk-form">
   <mat-form-field class="punk-width mat-form-field-flex">

@@ -74,8 +74,7 @@ export class PunkViewComponent implements OnInit {
   columnsToDisplay = ['Addresses', 'NumberOfPunks'];
   myTableDataArray: any;
 
-  punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1)]);
-
+  punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1),Validators.maxLength(4)]);
 
   gridByBreakpoint = {
     xl: 8,
@@ -315,6 +314,7 @@ export class PunkViewComponent implements OnInit {
   // public chartHovered(e: any): void {
   //   console.log(e);
   // }
+  validPunkOnForm: number | null  = null;
 
   getNickname(owner: string){
     let owners = new Map<string, string>;
@@ -330,5 +330,23 @@ export class PunkViewComponent implements OnInit {
       return nickname;
     }
     return owner;
+  }
+
+  callPunkQuery(value: string | null) {
+      if(value){
+        let punk = this.punksList.find((x: { id: string; }) => x.id === value);
+        if(punk){
+          this.validPunkOnForm = parseInt(value);
+        } else{
+          this.validPunkOnForm = null
+        }
+      }  else{
+        this.validPunkOnForm = null
+      }
+  }
+
+  getPunkOwner(validPunkOnForm: number) {
+    let punk = this.punksList.find((x: { id: string; }) => x.id === validPunkOnForm.toString());
+    return this.getNickname(punk.owner.id);
   }
 }
