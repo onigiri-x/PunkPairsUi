@@ -201,6 +201,7 @@ export class PunkViewComponent implements OnInit {
       .valueChanges.subscribe((result: any) => {
         console.log(result?.data);
         this.punksList = this.punksList.concat(result?.data?.punks);
+        this.punksList = this.shuffle(this.punksList);
         this.loading = false;
         this.owners = this.getOwnersArray();
       });
@@ -215,6 +216,24 @@ export class PunkViewComponent implements OnInit {
     this.highValue = this.lowValue + event.pageSize;
     return event;
   }
+
+  shuffle<T>(array: T[]): T[] {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  };
 
   public getOwnersArray(): Map<string, number[]> {
     const owners = new Map<string, number[]>;
