@@ -8,6 +8,8 @@ import { BaseChartDirective } from 'ng2-charts';
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 
+
+
 @Component({
   selector: 'app-punk-view',
   templateUrl: './punk-view.component.html',
@@ -16,6 +18,9 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 export class PunkViewComponent implements OnInit {
   @ViewChild( BaseChartDirective ) chart: BaseChartDirective | undefined;
   public dataSource: any;
+
+  public v1Floor: any;
+
   title = 'app';
   // Pie
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -204,6 +209,18 @@ export class PunkViewComponent implements OnInit {
         this.punksList = this.shuffle(this.punksList);
         this.loading = false;
         this.owners = this.getOwnersArray();
+        if(this.punksList.length > 1001){
+          const options = {method: 'GET', headers: {Accept: '*/*', 'x-api-key': 'demo-api-key'}};
+
+          fetch('https://api.reservoir.tools/tokens/v5?tokens=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d%3A3630&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=false', options)
+            .then(response => response.json())
+            .then(response => {
+              console.log(response);
+              this.v1Floor = response;
+            })
+
+            .catch(err => console.error(err));
+        }
       });
   }
 
