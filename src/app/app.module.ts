@@ -18,12 +18,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PunkViewComponent,
-    PunkTileComponent
+    PunkTileComponent,
+    PunkDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import {MatButtonModule} from "@angular/material/button";
     HttpClientModule,
     MatCardModule,
     MatGridListModule,
+    MatDialogModule,
     MatPaginatorModule,
     NgChartsModule,
     FormsModule,

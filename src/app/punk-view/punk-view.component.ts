@@ -7,6 +7,8 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {PunkDialogComponent} from "./punk-dialog/punk-dialog.component";
 
 
 
@@ -115,7 +117,7 @@ export class PunkViewComponent implements OnInit {
   }
 `
 
-  constructor(private apollo: Apollo, private breakpointObserver: BreakpointObserver) {
+  constructor(private apollo: Apollo, public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
    this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -218,6 +220,14 @@ export class PunkViewComponent implements OnInit {
               console.log(response);
               this.v1Floor = response;
             })
+
+            .catch(err => console.error(err));
+
+          fetch('https://api.reservoir.tools/orders/asks/v3?contracts=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d&includePrivate=false&includeMetadata=false&includeRawData=false&sortBy=createdAt&limit=1000', options)
+
+            .then(response => response.json())
+
+            .then(response => console.log(response))
 
             .catch(err => console.error(err));
         }
@@ -373,6 +383,11 @@ export class PunkViewComponent implements OnInit {
         let punk = this.punksList.find((x: { id: string; }) => x.id === value);
         if(punk){
           this.validPunkOnForm = parseInt(value);
+            this.dialog.open(PunkDialogComponent, {
+              data: {
+                punk,
+              },
+            });
         } else{
           this.validPunkOnForm = null
         }

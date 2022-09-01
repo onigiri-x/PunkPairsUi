@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PunkDialogComponent} from "../punk-dialog/punk-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-punk-tile',
@@ -8,7 +10,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class PunkTileComponent implements OnInit {
   @Input() punk: any;
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -25,5 +27,13 @@ export class PunkTileComponent implements OnInit {
     } else {
       return "https://notlarvalabs.com/static/punk" + this.punk.id + ".svg";
     }
+  }
+
+  openDialog() {
+    this.dialog.open(PunkDialogComponent, {
+      data: {
+        punk: this.punk,
+      },
+    });
   }
 }

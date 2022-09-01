@@ -1,4 +1,4 @@
 <mat-card class="fullwidthcard">
-  <img class="img-setting" [src]="getPunkPic()"/>
+  <img class="img-setting" [src]="getPunkPic()" (click)="openDialog()"/>
   <span class="whitecolor"><strong>{{this.punk.id}}</strong></span>
 </mat-card>
