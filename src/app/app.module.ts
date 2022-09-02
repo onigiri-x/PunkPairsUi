@@ -20,6 +20,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -28,24 +29,25 @@ import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component
     PunkTileComponent,
     PunkDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ApolloModule,
-    HttpClientModule,
-    MatCardModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatPaginatorModule,
-    NgChartsModule,
-    FormsModule,
-    MatTableModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ApolloModule,
+        HttpClientModule,
+        MatCardModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        NgChartsModule,
+        FormsModule,
+        MatTableModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatExpansionModule
+    ],
   providers: [
         {
       provide: APOLLO_OPTIONS,

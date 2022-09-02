@@ -1,6 +1,16 @@
 <h1 mat-dialog-title> Punk #{{this.data.punk.id}}</h1>
 <div mat-dialog-content class="dialog-punk-content">
   <img class="img-setting" [src]="getPunkPic()"/>
+  <h2>Punk pair is owned by {{this.data.punk.owner.id}}</h2>
+  <h3>Check this owners account</h3>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <h2>See token activity</h2>
+    </mat-expansion-panel-header>
+    <mat-card class="wallet" *ngFor="let event of this.data.punk.events">
+      {{event | json}}
+    </mat-card>
+  </mat-expansion-panel>
 </div>
 
 
