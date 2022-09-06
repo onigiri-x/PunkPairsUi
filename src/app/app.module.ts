@@ -55,7 +55,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental',
+            uri: 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental2',
           }),
         };
       },

@@ -1,4 +1,5 @@
 <mat-card class="fullwidthcard">
   <img class="img-setting" [src]="getPunkPic()" (click)="openDialog()"/>
   <span class="whitecolor"><strong>{{this.punk.id}}</strong></span>
+  <p class="whitecolor" *ngIf="this.punk.currentAsk && this.punk.currentAsk.open === true"><strong>Ask: {{parseETH(this.punk.currentAsk.amount)}}</strong></p>
 </mat-card>

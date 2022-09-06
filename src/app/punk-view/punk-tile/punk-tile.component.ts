@@ -36,4 +36,8 @@ export class PunkTileComponent implements OnInit {
       },
     });
   }
+
+  parseETH(amount: string) {
+    return Number.parseInt(amount) / 1000000000000000000;
+  }
 }

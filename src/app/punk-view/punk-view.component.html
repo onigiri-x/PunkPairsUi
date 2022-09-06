@@ -86,6 +86,11 @@
             <p *ngIf="!validPunkOnForm">Punk is not a valid Cryptopunk Pair</p>
             <p *ngIf="validPunkOnForm">Punk token id #{{validPunkOnForm}} inputted is a valid token pair owned by {{getPunkOwner(validPunkOnForm)}}</p>
   </mat-card>
+
+<mat-card>
+  <p>{{this.v1Floor | json
+    }}</p>
+</mat-card>
 <!--
 <form class="punk-form">
   <mat-form-field class="punk-width mat-form-field-flex">

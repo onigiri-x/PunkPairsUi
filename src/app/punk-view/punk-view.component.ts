@@ -90,32 +90,9 @@ export class PunkViewComponent implements OnInit {
     sm: 2,
     xs: 1
   }
-  uri = 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental';
+  uri = 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental2';
   punksList : any = [] ;
 
- tokensQuery2 = `
-  query {
-    punks(first: 1000, skip: 1000, where: {pairedV1: true}) {
-      id
-      owner {
-        id
-      }
-      pairedV1
-      events{
-      id
-      blockNumber
-      blockHash
-      type
-      from{
-        id
-      }
-      to{
-        id
-      }
-      txHash
-    }
-  }
-`
 
   constructor(private apollo: Apollo, public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
    this.breakpointObserver.observe([
@@ -156,6 +133,18 @@ export class PunkViewComponent implements OnInit {
                   id
                 }
                 pairedV1
+                currentAsk{
+                  open
+                  amount
+                }
+                currentBid{
+                  amount
+                  from{
+                    id
+                  }
+                }
+                numberOfTransfers
+                numberOfSales
                 events{
                   id
                   blockNumber
@@ -188,6 +177,18 @@ export class PunkViewComponent implements OnInit {
                 id
               }
               pairedV1
+              currentAsk{
+                amount
+                open
+              }
+              currentBid{
+                amount
+                from{
+                  id
+                }
+              }
+              numberOfTransfers
+              numberOfSales
               events{
                 id
                 blockNumber
@@ -212,26 +213,65 @@ export class PunkViewComponent implements OnInit {
         this.loading = false;
         this.owners = this.getOwnersArray();
         if(this.punksList.length > 1001){
+          this.punksList = this.punksList.sort(this.sortFloor());
           const options = {method: 'GET', headers: {Accept: '*/*', 'x-api-key': 'demo-api-key'}};
 
-          fetch('https://api.reservoir.tools/tokens/v5?tokens=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d%3A3630&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=false', options)
+  /*        fetch('https://api.reservoir.tools/tokens/v5?tokens=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d%3A3630&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=false', options)
             .then(response => response.json())
             .then(response => {
               console.log(response);
               this.v1Floor = response;
             })
 
-            .catch(err => console.error(err));
+            .catch(err => console.error(err));*/
 
           fetch('https://api.reservoir.tools/orders/asks/v3?contracts=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d&includePrivate=false&includeMetadata=false&includeRawData=false&sortBy=createdAt&limit=1000', options)
 
             .then(response => response.json())
 
-            .then(response => console.log(response))
+            .then(response => {
+              console.log(response);
+              this.v1Floor = response;
+            })
 
             .catch(err => console.error(err));
         }
       });
+  }
+
+  public sortFloor() {
+    return function (a: any, b: any) {
+      // equal items sort equally
+      if(a.currentAsk && b.currentAsk) {
+        if (a.currentAsk.amount === b.currentAsk.amount) {
+          return 0;
+        }
+      }
+
+      // nulls sort after anything else
+      if (a.currentAsk === null) {
+        return 1;
+      }
+      if (b.currentAsk === null) {
+        return -1;
+      }
+
+      if(a.currentAsk.open === false){
+        return 1
+      }
+
+      if(b.currentAsk.open === false){
+        return -1
+      }
+
+      // // otherwise, if we're ascending, lowest sorts first
+      // if (ascending) {
+        return Number.parseInt(a.currentAsk.amount) < Number.parseInt(b.currentAsk.amount) ? -1 : 1;
+      // }
+      //
+      // // if descending, highest sorts first
+      // return a < b ? 1 : -1;
+    };
   }
 
   lowValue: number = 0;
@@ -243,6 +283,7 @@ export class PunkViewComponent implements OnInit {
     this.highValue = this.lowValue + event.pageSize;
     return event;
   }
+
 
   shuffle<T>(array: T[]): T[] {
     let currentIndex = array.length,  randomIndex;
