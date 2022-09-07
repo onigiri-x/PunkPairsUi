@@ -1,7 +1,9 @@
 <h1 mat-dialog-title> Punk #{{this.data.punk.id}}</h1>
 <div mat-dialog-content class="dialog-punk-content">
   <img class="img-setting" [src]="getPunkPic()"/>
-  <h2>Punk pair is owned by {{this.data.punk.owner.id}}</h2>
+  <h2 *ngIf="this.data.punk.pairedV1">Punk pair is owned by {{this.data.punk.owner.id}}</h2>
+  <h2 *ngIf="!this.data.punk.pairedV1">This token id is not a Punk Pair owned by a single account</h2>
+  <h2>V1 price is {{this.data.punk.v1FloorPrice}}</h2>
   <h3>Check this owners account</h3>
   <mat-expansion-panel>
     <mat-expansion-panel-header>

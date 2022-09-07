@@ -11,8 +11,6 @@
 <br>
 <br>
 <p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here:</p>
-<br>
-
 
 <p *ngIf="loading">Loading...</p>
 <mat-grid-list [cols]="cols" class="fullwidth">
@@ -25,6 +23,22 @@
 </mat-grid-list>
 
 <mat-paginator class = "paginator1" [length]="punksList.length" pageSize=24
+               (page)="getPaginatorData($event)" [pageSizeOptions]="[24, 80, 240]"
+               showFirstLastButtons="false" class="fullwidth">
+</mat-paginator>
+<br>
+<br>
+<h1 class="pinkback">Snipe Pairs For Sale</h1>
+<mat-grid-list [cols]="cols" class="fullwidth">
+  <mat-grid-tile *ngFor="let punk of (getOrderList(snipeList).
+                         slice(lowValue,highValue))"
+  >
+    <app-punk-tile class="fillbox" [punk]="punk"></app-punk-tile>
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-paginator class = "paginator1" [length]="snipeList.length" pageSize=24
                (page)="getPaginatorData($event)" [pageSizeOptions]="[24, 80, 240]"
                showFirstLastButtons="false" class="fullwidth">
 </mat-paginator>
@@ -54,8 +68,8 @@
       [colspan]="1">
     <div class="example-container mat-elevation-z8">
      <mat-table [dataSource] = "myTableDataArray" *ngIf="myTableDataArray && myTableDataArray.length > 0">
+       <mat-text-column name="NumberOfPunks">#</mat-text-column>
         <mat-text-column name="Addresses"></mat-text-column>
-        <mat-text-column name="NumberOfPunks">#</mat-text-column>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row class="mat-cell-custom" *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </mat-table>

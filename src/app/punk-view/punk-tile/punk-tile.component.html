@@ -1,5 +1,8 @@
 <mat-card class="fullwidthcard">
+  <span class="whitecolor"><strong>Punk #{{this.punk.id}}</strong></span>
   <img class="img-setting" [src]="getPunkPic()" (click)="openDialog()"/>
-  <span class="whitecolor"><strong>{{this.punk.id}}</strong></span>
-  <p class="whitecolor" *ngIf="this.punk.currentAsk && this.punk.currentAsk.open === true"><strong>Ask: {{parseETH(this.punk.currentAsk.amount)}}</strong></p>
+  <p class="whitecolor" *ngIf="this.punk.v1FloorPrice"><strong>BUY V1: {{this.punk.v1FloorPrice}} ETH</strong></p>
+  <p class="whitecolor" *ngIf="this.punk.currentAsk && this.punk.currentAsk.open === true"><strong>BUY V2: {{parseETH(this.punk.currentAsk.amount)}} ETH</strong></p>
+  <p class="whitecolor" *ngIf="this.punk.totalPrice"><strong>TOTAL: {{this.punk.totalPrice}} ETH</strong></p>
+ <!-- <p class="whitecolor" *ngIf="this.punk.v1FloorPrice && this.punk.currentAsk && this.punk.currentAsk.open === true"><strong>Total: {{this.punk.v1FloorPrice + parseETH(this.punk.currentAsk.amount)}} ETH</strong></p> -->
 </mat-card>

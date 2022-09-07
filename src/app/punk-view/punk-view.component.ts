@@ -5,11 +5,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import {ErrorStateMatcher} from "@angular/material/core";
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {PunkDialogComponent} from "./punk-dialog/punk-dialog.component";
-
 
 
 @Component({
@@ -78,7 +76,7 @@ export class PunkViewComponent implements OnInit {
   loading = true;
   owners: Map<string, number[]> | undefined;
 
-  columnsToDisplay = ['Addresses', 'NumberOfPunks'];
+  columnsToDisplay = ['NumberOfPunks','Addresses'];
   myTableDataArray: any;
 
   punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1),Validators.maxLength(4)]);
@@ -92,6 +90,7 @@ export class PunkViewComponent implements OnInit {
   }
   uri = 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental2';
   punksList : any = [] ;
+  snipeList : any = [] ;
 
 
   constructor(private apollo: Apollo, public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
@@ -123,6 +122,66 @@ export class PunkViewComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    const options = {method: 'GET', headers: {Accept: '*/*', 'x-api-key': 'demo-api-key'}};
+    fetch('https://api.reservoir.tools/orders/asks/v3?contracts=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d&includePrivate=false&includeMetadata=false&includeRawData=false&sortBy=createdAt&limit=1000', options)
+      .then(response => response.json())
+      .then(response => {
+        this.v1Floor = response.orders;
+        // Next is to search subgraph for just these token ids
+
+        let v1TokenIds = this.v1Floor.map((x: any)=>{
+          console.log( x.tokenSetId.slice(49));
+          return x.tokenSetId.slice(49);
+        });
+
+        this.apollo
+          .watchQuery({
+            query: gql`
+            {
+               punks(first: 1000, where: {id_in: [${v1TokenIds.toString()}]}) {
+                id
+                owner {
+                  id
+                }
+                pairedV1
+                currentAsk{
+                  open
+                  amount
+                }
+                currentBid{
+                  amount
+                  from{
+                    id
+                  }
+                }
+                numberOfTransfers
+                numberOfSales
+                events{
+                  id
+                  blockNumber
+                  blockHash
+                  type
+                  from{
+                    id
+                  }
+                  to{
+                    id
+                  }
+                  txHash
+                }
+              }
+            }
+          `,
+          })
+          .valueChanges.subscribe((result: any) => {
+          this.snipeList = result?.data?.punks;
+          this.snipeList = this.shuffle(this.snipeList);
+          this.processSnipes(this.v1Floor);
+          this.snipeList = this.snipeList.sort(this.sortFloorByTotalPrice());
+        });
+      })
+      .catch(err => console.error(err));
+
     this.apollo
         .watchQuery({
           query: gql`
@@ -163,7 +222,6 @@ export class PunkViewComponent implements OnInit {
           `,
         })
         .valueChanges.subscribe((result: any) => {
-          console.log(result?.data);
           this.punksList = this.punksList.concat(result?.data?.punks);
          // this.owners = this.getOwnersArray();
         });
@@ -207,36 +265,99 @@ export class PunkViewComponent implements OnInit {
         `,
       })
       .valueChanges.subscribe((result: any) => {
-        console.log(result?.data);
         this.punksList = this.punksList.concat(result?.data?.punks);
         this.punksList = this.shuffle(this.punksList);
         this.loading = false;
         this.owners = this.getOwnersArray();
         if(this.punksList.length > 1001){
           this.punksList = this.punksList.sort(this.sortFloor());
-          const options = {method: 'GET', headers: {Accept: '*/*', 'x-api-key': 'demo-api-key'}};
-
-  /*        fetch('https://api.reservoir.tools/tokens/v5?tokens=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d%3A3630&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=false', options)
-            .then(response => response.json())
-            .then(response => {
-              console.log(response);
-              this.v1Floor = response;
-            })
-
-            .catch(err => console.error(err));*/
-
-          fetch('https://api.reservoir.tools/orders/asks/v3?contracts=0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d&includePrivate=false&includeMetadata=false&includeRawData=false&sortBy=createdAt&limit=1000', options)
-
-            .then(response => response.json())
-
-            .then(response => {
-              console.log(response);
-              this.v1Floor = response;
-            })
-
-            .catch(err => console.error(err));
+          if(this.v1Floor) {
+            this.processV1(this.v1Floor);
+          }
         }
       });
+  }
+
+  public processV1(v1Floor: any){
+    for(let i=0; i< this.punksList.length; i++){
+        let tokenId = this.punksList[i].id;
+        let filteredV1s = v1Floor.filter((x: { tokenSetId: string; })=> {
+          return x.tokenSetId === 'token:0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d:'+tokenId.toString();
+        });
+        if(filteredV1s.length >0) {
+          filteredV1s = filteredV1s.sort(this.sortV1s());
+          this.punksList[i].v1FloorPrice = filteredV1s[0].price.amount.native;
+        }
+    }
+
+    this.punksList = this.punksList.sort(this.sortFloorByV1s())
+  }
+
+  public processSnipes(v1FloorSnipes: any){
+    for(let i=0; i< this.snipeList.length; i++){
+        let tokenId = this.snipeList[i].id;
+        let filteredV1s = v1FloorSnipes.filter((x: { tokenSetId: string; })=> {
+          return x.tokenSetId === 'token:0x282bdd42f4eb70e7a9d9f40c8fea0825b7f68c5d:'+tokenId.toString();
+        });
+        if(filteredV1s.length >0) {
+          filteredV1s = filteredV1s.sort(this.sortV1s());
+          this.snipeList[i].v1FloorPrice = filteredV1s[0].price.amount.native;
+          if(this.snipeList[i].currentAsk && this.snipeList[i].currentAsk.open === true){
+            this.snipeList[i].totalPrice = Number.parseFloat((this.snipeList[i].v1FloorPrice + ( Number.parseInt(this.snipeList[i].currentAsk.amount) / 1000000000000000000)).toFixed(3));
+          }
+        }
+    }
+
+    this.snipeList = this.snipeList.filter((x: { totalPrice: any })=> {
+      return x.totalPrice > 0;
+    });
+  }
+
+  public sortFloorByTotalPrice() {
+    return function (a: any, b: any) {
+      // equal items sort equally
+      if(a.totalPrice && b.totalPrice) {
+        if (a.totalPrice === b.totalPrice) {
+          return 0;
+        } else{
+          return a.totalPrice < b.totalPrice ? -1 : 1;
+        }
+      }
+
+      if(a.totalPrice){
+        return -1;
+      }
+      if(b.totalPrice){
+        return 1;
+      }
+
+
+
+      return 0;
+    };
+  }
+
+  public sortFloorByV1s() {
+    return function (a: any, b: any) {
+      // equal items sort equally
+      if(a.v1FloorPrice && b.v1FloorPrice) {
+        if (a.v1FloorPrice === b.v1FloorPrice) {
+          return 0;
+        } else{
+          return a.v1FloorPrice < b.v1FloorPrice ? -1 : 1;
+        }
+      }
+
+      if(a.v1FloorPrice){
+        return -1;
+      }
+      if(b.v1FloorPrice){
+        return 1;
+      }
+
+
+      return 0;
+    };
   }
 
   public sortFloor() {
@@ -271,6 +392,15 @@ export class PunkViewComponent implements OnInit {
       //
       // // if descending, highest sorts first
       // return a < b ? 1 : -1;
+    };
+  }
+
+  public sortV1s() {
+    return function (a: any, b: any) {
+        if(a.price.amount.native === b.price.amount.native){
+          return 0;
+        }
+        return a.price.amount.native < b.price.amount.native ? -1 : 1;
     };
   }
 
@@ -319,8 +449,6 @@ export class PunkViewComponent implements OnInit {
         owners.set(ownerNickname, array);
       }
     }
-    console.log('the owners are');
-    console.log([...owners.entries()]);
     this.owners = owners;
    // if([...owners.entries()].length > 100) {
       this.setChart([...owners.entries()]);
@@ -362,9 +490,6 @@ export class PunkViewComponent implements OnInit {
       this.pieChartData.datasets =  [ {
         data: dataset
        } ];
-      console.log('the owners are');
-      console.log(keys);
-      console.log(dataset);
 
       // Data table
       this.myTableDataArray = [];
@@ -388,19 +513,7 @@ export class PunkViewComponent implements OnInit {
     let keys = Array.from( this.owners.keys() );
     return keys.length;
   }
-  //
-  // public chartClicked(e: any): void {
-  //   if (e.active[0]) {
-  //     const clickedIndex = e.active[0]._index;
-  //     // this.openEditDialog(clickedIndex);
-  //     console.log(e);
-  //   }
-  // }
-  //
-  // // event on pie chart slice hover
-  // public chartHovered(e: any): void {
-  //   console.log(e);
-  // }
+
   validPunkOnForm: number | null  = null;
 
   getNickname(owner: string){

@@ -5,6 +5,7 @@
     align-items: center;
     overflow: hidden;
   min-width: 200px;
+  min-height: 100px;
 }
 
 .fillbox {
@@ -47,6 +48,11 @@
 ::ng-deep .mat-option-text {
   font-size: 35px;
   font-family: Montserrat, sans-serif;
+}
+
+::ng-deep .mat-grid-tile {
+  align-items: start !important;
+  overflow: visible !important;
 }
 .pinkback {
   background-color: #ff04b4;
