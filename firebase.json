@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist/punk-pairs-ui",
     "ignore": [
       "firebase.json",
       "**/.*",

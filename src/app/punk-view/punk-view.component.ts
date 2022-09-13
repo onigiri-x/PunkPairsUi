@@ -274,6 +274,8 @@ export class PunkViewComponent implements OnInit {
           if(this.v1Floor) {
             this.processV1(this.v1Floor);
           }
+          // @ts-ignore
+          document.getElementById('loading').style.display = 'none';
         }
       });
   }

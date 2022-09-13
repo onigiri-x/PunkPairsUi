@@ -1,4 +1,10 @@
 
+<div class="d-flex justify-content-center">
+  <div class="spinner-border" role="status" >
+    <span class="sr-only" id="loading"></span>
+  </div>
+</div>
+
 <br>
 <br>
 <br>
@@ -12,7 +18,7 @@
 <br>
 <p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here:</p>
 
-<p *ngIf="loading">Loading...</p>
+<p *ngIf="loading">Loading punk pairs and orders please standby...</p>
 <mat-grid-list [cols]="cols" class="fullwidth">
    <mat-grid-tile *ngFor="let punk of (getOrderList(punksList).
                          slice(lowValue,highValue))"
