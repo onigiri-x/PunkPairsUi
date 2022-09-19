@@ -26,4 +26,8 @@ export class PunkDialogComponent {
       return "https://notlarvalabs.com/static/punk" + this.data.punk.id + ".svg";
     }
   }
+
+  getV2URL() {
+    return "https://cryptopunks.app/cryptopunks/details/"+ this.data.punk.id.toString();
+  }
 }
