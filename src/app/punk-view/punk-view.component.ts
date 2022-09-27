@@ -130,7 +130,6 @@ export class PunkViewComponent implements OnInit {
         // Next is to search subgraph for just these token ids
 
         let v1TokenIds = this.v1Floor.map((x: any)=>{
-          console.log( x.tokenSetId.slice(49));
           return x.tokenSetId.slice(49);
         });
 
@@ -289,6 +288,7 @@ export class PunkViewComponent implements OnInit {
         if(filteredV1s.length >0) {
           filteredV1s = filteredV1s.sort(this.sortV1s());
           this.punksList[i].v1FloorPrice = filteredV1s[0].price.amount.native;
+          this.punksList[i].bestOffer = filteredV1s[0].source;
         }
     }
 
@@ -304,6 +304,8 @@ export class PunkViewComponent implements OnInit {
         if(filteredV1s.length >0) {
           filteredV1s = filteredV1s.sort(this.sortV1s());
           this.snipeList[i].v1FloorPrice = filteredV1s[0].price.amount.native;
+          this.snipeList[i].bestOffer = filteredV1s[0].source;
+
           if(this.snipeList[i].currentAsk && this.snipeList[i].currentAsk.open === true){
             this.snipeList[i].totalPrice = Number.parseFloat((this.snipeList[i].v1FloorPrice + ( Number.parseInt(this.snipeList[i].currentAsk.amount) / 1000000000000000000)).toFixed(3));
           }

@@ -9,13 +9,19 @@
 <br>
 <br>
 <br>
-<p class="rightfont2">Punk pairs are a perfect combination between the collection commonly known as the "Cryptopunks" and their originally claimed V1 Token Equivalent</p>
+<mat-card>
+  <p class="rightfont2">Cryptopunk pairs are a perfect combination between the collection commonly known as the "Cryptopunks" and their originally claimed V1 Token Equivalent</p>
+  <br>
+</mat-card>
+<mat-card>
+  <p class="rightfont2">A Punk Pair is formed when an OG V1 Token for a Cryptopunk is in the same wallet as it's V2 Cryptopunk doppelganger</p>
+  <br>
+  <p class="rightfont2">Is the original token more valuable or it's commonly traded counterpart? With both there is no doubting the provenance of the Punk</p>
+
+</mat-card>
 <br>
-<p class="rightfont2">A Punk Pair is formed when an OG V1 Token for a Cryptopunk is in the same wallet as it's V2 Cryptopunk doppelganger</p>
 <br>
-<p class="rightfont2">Punk pairs are the solution to the popular argument, is the original token more valuable or it's commonly traded counterpart?</p>
-<br>
-<br>
+
 <p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here:</p>
 
 <p *ngIf="loading">Loading punk pairs and orders please standby...</p>
@@ -89,10 +95,9 @@
 <br>
 <br>
 <!-- add loader here -->
-<p class="rightfont2" *ngIf="!loading">Use the box below to check whether your Punk ID is a Punk Pair</p>
-<br>
-<br>
 <mat-card class="punk-form">
+  <p class="rightfont2" *ngIf="!loading">Use the box below to check whether your Punk ID is a Punk Pair</p>
+  <br>
 <input [formControl]="punkFormControl" type="text" class="code {{punkFormControl.invalid && punkFormControl.dirty && 'invalid'}} search-field"
                    placeholder="XXXXXX" maxlength="6">
             <button class="search-button" mat-button [disabled]="punkFormControl.invalid" type="button"
@@ -106,20 +111,28 @@
             <p *ngIf="!validPunkOnForm">Punk is not a valid Cryptopunk Pair</p>
             <p *ngIf="validPunkOnForm">Punk token id #{{validPunkOnForm}} inputted is a valid token pair owned by {{getPunkOwner(validPunkOnForm)}}</p>
   </mat-card>
-<br>
 <h1 class="pinkback">Support the project</h1>
-<mat-card>
-  <p class="rightfont2">The punk pairs project was built with 0 funds entirely by 3757.eth</p>
-  <p class="rightfont2">With support, we can add filters, advanced analytics, and an on chain protocol to buy multiple tokens at once</p>
-  <p class="rightfont2">Remember that currently, if you purchase a v1 or v2 with the intention of buying it's pair, the other token may get bought or delisted before you have a chance to snipe the entire pair</p>
-  <p class="rightfont2">If you want to support the punk pairs project, <strong>send a tip to the tip jar or get in touch with 3757.eth on Twitter</strong></p>
-  <p class="rightfont2">This project is open to partnerships and if you want to build your own website, subgraph or smart contract 3757 can help you out with this</p>
-</mat-card>
 
-<mat-card>
-  <p>{{this.v1Floor | json
-    }}</p>
-</mat-card>
+  <mat-card>
+    <p class="rightfont2">The punk pairs project was built with 0 funds entirely by the Vampirate 3757.eth</p>
+    <p class="rightfont2">With support, we can add trait filters, advanced analytics, wallet connect, and on chain features to make buying more efficient</p>
+  </mat-card>
+  <mat-card>
+   <p class="rightfont2">Remember that currently, if you purchase a v1 or v2 with the intention of buying it's pair, the other token may get bought or delisted before you have a chance to snipe the entire pair. With more support we can develop more tools to improve the future experience of Cryptopunk collectors</p>
+  </mat-card>
+  <mat-card>
+    <p class="rightfont2">If you want to support the punk pairs project, <strong>send a tip to the tip jar (3757.eth) or get in touch with @3757eth on Twitter</strong></p>
+  </mat-card>
+  <mat-card>
+    <p class="rightfont2">This project is open to partnerships and if you want to build your own website, subgraph or smart contract 3757.eth can help you out with this</p>
+  </mat-card>
+
+
+
+<!--<mat-card>-->
+<!--  <p>{{this.v1Floor | json-->
+<!--    }}</p>-->
+<!--</mat-card>-->
 <!--
 <form class="punk-form">
   <mat-form-field class="punk-width mat-form-field-flex">

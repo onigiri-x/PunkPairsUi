@@ -21,13 +21,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {OwnerDialogComponent} from "./punk-view/owner-dialog/owner-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PunkViewComponent,
     PunkTileComponent,
-    PunkDialogComponent
+    PunkDialogComponent,
+    OwnerDialogComponent
   ],
     imports: [
         BrowserModule,

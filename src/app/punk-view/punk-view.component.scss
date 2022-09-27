@@ -108,6 +108,12 @@ mat-table {
   border-style: solid;
   margin: 5px;
 }
+.mat-card {
+  border: 2px solid rgba(255, 4, 180,.3);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+  margin: 5px;
+}
 .search-field {
   font-size: 35px;
   padding: 8px;

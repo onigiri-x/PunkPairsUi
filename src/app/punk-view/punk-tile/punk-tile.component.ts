@@ -38,6 +38,8 @@ export class PunkTileComponent implements OnInit {
   }
 
   parseETH(amount: string) {
-    return Number.parseInt(amount) / 1000000000000000000;
+    let getNum = Number.parseInt(amount) / 1000000000000000000;
+    let fixedNum = getNum.toFixed(3);
+    return Number.parseFloat(fixedNum.toString());
   }
 }

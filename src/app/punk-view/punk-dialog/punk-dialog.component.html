@@ -1,20 +1,33 @@
 <h1 mat-dialog-title> Punk #{{this.data.punk.id}}</h1>
 <div mat-dialog-content class="dialog-punk-content">
   <img class="img-setting" [src]="getPunkPic()"/>
-  <h2 *ngIf="this.data.punk.pairedV1">Punk pair is owned by {{this.data.punk.owner.id}}</h2>
-  <h2 *ngIf="!this.data.punk.pairedV1">This token id is not a Punk Pair owned by a single account</h2>
-  <h2 *ngIf="this.data.punk.v1FloorPrice">V1 price is {{this.data.punk.v1FloorPrice}}</h2>
-  <h2 *ngIf="this.data.punk.currentAsk.amount && this.data.punk.currentAsk.open === true">V2 price is {{this.data.punk.currentAsk.amount}}</h2>
-  <h3 *ngIf="this.data.punk.currentAsk.amount && this.data.punk.currentAsk.open === true"> <a target=”_blank” href="{{getV2URL()}}">Go to Cryptopunks App (V2 Market)</a></h3>
-  <h3>Check this owners account</h3>
+  <mat-card>
+    <h2 *ngIf="this.data.punk.pairedV1">Punk pair is owned by {{this.data.punk.owner.id}}</h2>
+    <h2 *ngIf="this.data.punk.pairedV1"><a target=”_blank” href="{{getLinkOwner(this.data.punk.owner.id)}}">Check owner on etherscan</a></h2>
+    <h2 *ngIf="!this.data.punk.pairedV1">This token id is not a Punk Pair owned by a single account</h2>
+    <h2 *ngIf="this.data.punk.v1FloorPrice">V1 price is {{this.data.punk.v1FloorPrice}} ETH</h2>
+    <h2 *ngIf="this.data.punk.currentAsk.amount && this.data.punk.currentAsk.open === true">V2 price is {{parseETH(this.data.punk.currentAsk.amount)}} ETH</h2>
+    <h2 *ngIf="this.data.punk.currentAsk.amount && this.data.punk.currentAsk.open === true && this.data.punk.totalPrice">Total price is {{this.data.punk.totalPrice}} ETH</h2>
+  </mat-card>
+
+  <mat-card>
+    <h2 *ngIf="this.data.punk.bestOffer"> <a target=”_blank” href="{{getV1BestOfferURL()}}">* Click to find best offer for V1 Punk on {{this.data.punk.bestOffer.name}} Exchange</a></h2>
+    <h2> <a target=”_blank” href="{{getV2URL()}}">* Click to find V2 punk on Cryptopunks App (V2 Market)</a></h2>
+  </mat-card>
+
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-        <h2>See token activity</h2>
+        <h2>See V2 token activity</h2>
     </mat-expansion-panel-header>
-    <mat-card class="wallet" *ngFor="let event of this.data.punk.events">
-      {{event | json}}
+    <mat-card class="wallet" *ngFor="let event of sortEvents(this.data.punk.events)">
+      <p>Event: {{event.__typename}}</p>
+      <p *ngIf="checkAddress(event.from)">From: {{getAddress(event.from)}}</p>
+      <p *ngIf="checkAddress(event.to)" >To: {{getAddress(event.to)}}</p>
+      <p> <a target=”_blank” href="{{'https://etherscan.io/tx/'+event.txHash}}">Check on Etherscan </a></p>
     </mat-card>
   </mat-expansion-panel>
+  <br>
+  <br>
 </div>
 
 
