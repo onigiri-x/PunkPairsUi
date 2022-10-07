@@ -59,6 +59,7 @@
   background-color: #ff04b4;
   font-family: Montserrat,sans-serif !important;
   font-size: 60px;
+  line-height: 60px !important;
   padding: 30px;
   text-align: center;
   color: white
@@ -83,8 +84,8 @@ mat-table {
 }
 ::ng-deep tr.mat-row > td {
     font-size: 35px;
-
-  padding:20px !important;
+    line-height: 35px !important;
+    padding:20px !important;
 }
 
 ::ng-deep th.mat-header-cell, td.mat-cell, td.mat-footer-cell {

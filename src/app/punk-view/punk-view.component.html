@@ -79,10 +79,10 @@
       [colspan]="1">
     <div class="example-container mat-elevation-z8">
      <mat-table [dataSource] = "myTableDataArray" *ngIf="myTableDataArray && myTableDataArray.length > 0">
-       <mat-text-column name="NumberOfPunks">#</mat-text-column>
+       <mat-text-column name="Pairs">#</mat-text-column>
         <mat-text-column name="Addresses"></mat-text-column>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row class="mat-cell-custom" *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+      <tr mat-row class="mat-cell-custom" *matRowDef="let myRowData; columns: columnsToDisplay" (click)="callOwnerDialog(myRowData.Addresses)"></tr>
     </mat-table>
     </div>
   </mat-grid-tile>
@@ -115,6 +115,7 @@
   <mat-card>
     <p class="rightfont2">The punk pairs project was built with 0 funds entirely by the Vampirate 3757.eth</p>
     <p class="rightfont2">With support, we can add trait filters, advanced analytics, wallet connect, and on chain features to make buying more efficient</p>
+    <p class="rightfont2">More marketplaces and nft pools will be integrated as well to increase the reach of the snipe pairs capability</p>
   </mat-card>
   <mat-card>
    <p class="rightfont2">Remember that currently, if you purchase a v1 or v2 with the intention of buying it's pair, the other token may get bought or delisted before you have a chance to snipe the entire pair. With more support we can develop more tools to improve the future experience of Cryptopunk collectors</p>

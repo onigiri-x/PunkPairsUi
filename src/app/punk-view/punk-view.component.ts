@@ -8,6 +8,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import {FormControl, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {PunkDialogComponent} from "./punk-dialog/punk-dialog.component";
+import {OwnerDialogComponent} from "./owner-dialog/owner-dialog.component";
 
 
 @Component({
@@ -76,7 +77,7 @@ export class PunkViewComponent implements OnInit {
   loading = true;
   owners: Map<string, number[]> | undefined;
 
-  columnsToDisplay = ['NumberOfPunks','Addresses'];
+  columnsToDisplay = ['Pairs','Addresses'];
   myTableDataArray: any;
 
   punkFormControl = new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(1),Validators.maxLength(4)]);
@@ -498,7 +499,7 @@ export class PunkViewComponent implements OnInit {
       // Data table
       this.myTableDataArray = [];
       for(let i=0; i<dataset.length ; i++){
-          this.myTableDataArray.push({Addresses: keys[dataset.length - 1 - i], NumberOfPunks: dataset[dataset.length - 1 - i]});
+          this.myTableDataArray.push({Addresses: keys[dataset.length - 1 - i], Pairs: dataset[dataset.length - 1 - i]});
       }
     }
   }
@@ -554,8 +555,29 @@ export class PunkViewComponent implements OnInit {
       }
   }
 
+  callOwnerDialog(value: string | null) {
+    // temp
+    value = '0x6301add4fb128de9778b8651a2a9278b86761423';
+      if(value){
+        let ownersPunkList = this.punksList.filter(((x: { owner: { id: string; }; }) => x.owner.id === value));
+        if(ownersPunkList){
+          this.validPunkOnForm = parseInt(value);
+            this.dialog.open(OwnerDialogComponent, {
+              data: {
+                ownersPunkList,
+              },
+            });
+        } else{
+          console.log('invalid owner');
+        }
+      }
+  }
+
   getPunkOwner(validPunkOnForm: number) {
     let punk = this.punksList.find((x: { id: string; }) => x.id === validPunkOnForm.toString());
-    return this.getNickname(punk.owner.id);
+    if(punk){
+      return this.getNickname(punk.owner.id);
+    }
+    return '0x0000000000000000000000000000000000000000'
   }
 }
