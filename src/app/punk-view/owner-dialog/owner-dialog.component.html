@@ -1,4 +1,17 @@
-<h1 mat-dialog-title> Owner Paired Punks</h1>
+<h1 mat-dialog-title *ngIf="!hasEthName(this.data.ogNameAddress)"> Owner Paired Punks for {{this.data.ogNameAddress}}</h1>
+<h1 mat-dialog-title *ngIf="hasEthName(this.data.ogNameAddress)"> Owner Paired Punks for {{this.data.ogNameAddress}} ({{this.data.address}})</h1>
+<h2><a target=”_blank” href="{{getLinkOwner(this.data.address)}}">Check owner on etherscan</a></h2>
 <div mat-dialog-content class="dialog-punk-content">
-<p>{{this.data.ownersPunkList | json}}</p>
+  <mat-grid-list [cols]="cols" class="fullwidth">
+    <mat-grid-tile *ngFor="let punk of (getOrderList(this.data.ownersPunkList).
+                         slice(lowValue,highValue))"
+    >
+      <app-punk-tile class="fillbox" [punk]="punk"></app-punk-tile>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-paginator class = "paginator1" [length]="this.data.ownersPunkList.length" pageSize=16
+                 (page)="getPaginatorData($event)" [pageSizeOptions]="[16, 80, 240]"
+                 showFirstLastButtons="false" class="fullwidth">
+  </mat-paginator>
 </div>

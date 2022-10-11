@@ -521,7 +521,7 @@ export class PunkViewComponent implements OnInit {
 
   validPunkOnForm: number | null  = null;
 
-  getNickname(owner: string){
+  getOwnersList(): Map<string,string> {
     let owners = new Map<string, string>;
     owners.set('0xa858ddc0445d8131dac4d1de01f834ffcba52ef1', 'Yuga Labs');
     owners.set('0x26f744711ee9e5079cbeaf318ba8a8e938844de6', 'smithdavid888.eth');
@@ -530,11 +530,33 @@ export class PunkViewComponent implements OnInit {
     owners.set('0xc24f574d6853f6f6a31c19d468a8c1b3f31c0e54', 'shilpixels.eth');
     owners.set('0x783ca9833d58a6b39ee72db81f07571d72c0064e', 'pjcurly.eth');
     owners.set('0x94de7e2c73529ebf3206aa3459e699fbcdfcd49b', 'tonyherrera.eth');
+    return owners;
+}
+
+  getNickname(owner: string){
+   let owners = this.getOwnersList();
     const nickname = owners.get(owner);
     if(nickname){
       return nickname;
     }
     return owner;
+  }
+
+  getByValue(map: Map<string,string>, searchValue: any) {
+    for (let [key, value] of map.entries()) {
+      if (value === searchValue)
+        return key;
+    }
+    return '0x0000000000000000000000000000000000000000'
+  }
+
+  getAddressFromNickname(owner: string){
+   let owners = this.getOwnersList();
+    const address = this.getByValue(owners, owner);
+    if(address){
+      return address;
+    }
+    return '0x0000000000000000000000000000000000000000';
   }
 
   callPunkQuery(value: string | null) {
@@ -555,9 +577,19 @@ export class PunkViewComponent implements OnInit {
       }
   }
 
-  callOwnerDialog(value: string | null) {
-    // temp
-    value = '0x6301add4fb128de9778b8651a2a9278b86761423';
+  callOwnerDialog(value: any) {
+    console.log('the owner data package is');
+    console.log(value);
+    console.log(value.Addresses);
+    console.log(value.Addresses.slice(0,2));
+    let ogNameAddress = value.Addresses;
+    let address = value.Addresses;
+    if(address.length !== 42 || address.slice(0,2) !== '0x'){
+      // Need to reverse encode the nickname
+      address = this.getAddressFromNickname(address);
+    }
+
+    value = address;
       if(value){
         let ownersPunkList = this.punksList.filter(((x: { owner: { id: string; }; }) => x.owner.id === value));
         if(ownersPunkList){
@@ -565,7 +597,10 @@ export class PunkViewComponent implements OnInit {
             this.dialog.open(OwnerDialogComponent, {
               data: {
                 ownersPunkList,
+                ogNameAddress,
+                address
               },
+              width: '90%'
             });
         } else{
           console.log('invalid owner');
