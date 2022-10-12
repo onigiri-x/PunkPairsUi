@@ -530,6 +530,26 @@ export class PunkViewComponent implements OnInit {
     owners.set('0xc24f574d6853f6f6a31c19d468a8c1b3f31c0e54', 'shilpixels.eth');
     owners.set('0x783ca9833d58a6b39ee72db81f07571d72c0064e', 'pjcurly.eth');
     owners.set('0x94de7e2c73529ebf3206aa3459e699fbcdfcd49b', 'tonyherrera.eth');
+    owners.set('0xfaf9f63baf57b19ca4e9490aaab1ede8b66cc2b5', 'vr-punk.eth');
+    owners.set('0x000001f568875f378bf6d170b790967fe429c81a', 'bokkypoobah.eth');
+    owners.set('0xeb26E394da8d8AD5bEDDE97a281a9a9b63b3Eef3', 'trademuch.eth');
+    owners.set('0x00000217d2795f1da57e392d2a5bc87125baa38d', 'shittybank.eth');
+    owners.set('0x8884F2Af43bCbd9ab81f7A4aC35f421Df1926810', 'alien3443.eth');
+    owners.set('0x2BE830C9c4A3eB3f9eBF736eED948e9ec1f1f33b', '3690.eth');
+    owners.set('0xaf7cf5910510b7cf912c156f91244487632e5fb6', 'vault.seanbonner.eth');
+    owners.set('0x2754637ab168ff25412b74997c0e4f43c30bb323', 'thecryptopunk.eth');
+    owners.set('0xbde05e34ea7e059a56428985b66ae07fbc41a497', 'cyberpnk.eth');
+    owners.set('0xe4bbcbff51e61d0d95fcc5016609ac8354b177c4', 'Steve Aoki');
+    owners.set('0xfd845e07717b0329d3f19fc920c97fba0bc4ee31', 'j10.eth');
+    owners.set('0x4a39ae58b605102913ac19b7c071da75b55b2674', 'punk7635.eth');
+    owners.set('0x5bc02aab45797065768f68857b61e1dc60b26a89', 'omu.eth');
+    owners.set('0x1e32a859d69dde58d03820f8f138c99b688d132f', 'straybits.eth');
+    owners.set('0xc5d5560af8d0dcacaf8b8cee91911c4833c3f551', 'andrewii.eth');
+    owners.set('0xb01e39a4965475047016544931f4b05b905b7059', 'punk4722.eth');
+    owners.set('0xee075d16773517479f0ddba8cbc974ae4e1e205c', 'panksy.eth');
+    owners.set('0x647eb74a5135a0f24beee3c2d8432adcbb32c2a8', 'iancr.eth');
+    owners.set('0x457ec0c459f3ac559ceb48951675fbae4c744288', 'vault.robertclarke.eth');
+    owners.set('0x81b9a5f21efdb5df0210471b9a94e0d4ad9951ed', 'valko.eth');
     return owners;
 }
 

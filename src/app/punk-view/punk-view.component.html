@@ -21,7 +21,7 @@
 <br>
 <br>
 
-<p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here:</p>
+<p class="rightfont2" *ngIf="!loading">Ser there are currently <strong>{{punksList.length}} Punk Pairs</strong>. Browse them here (click punk img for more):</p>
 
 <p *ngIf="loading">Loading punk pairs and orders please standby...</p>
 <mat-grid-list [cols]="cols" class="fullwidth">
@@ -39,7 +39,7 @@
 </mat-paginator>
 <br>
 <br>
-<h1 class="pinkback">Snipe Pairs For Sale</h1>
+<h1 class="pinkback">Snipe Pairs For Sale (Not Paired in 1 wallet)</h1>
 <mat-grid-list [cols]="cols" class="fullwidth">
   <mat-grid-tile *ngFor="let punk of (getOrderList(snipeList).
                          slice(lowValue,highValue))"
@@ -58,7 +58,7 @@
 <h1 class="pinkback">Top Punk Pair Hodlers</h1>
 <br>
 <br>
-<p class="rightfont2" *ngIf="!loading">There are currently <strong> {{getNumberOfOwners()}} Hodlers </strong> in total with Punk Pairs</p>
+<p class="rightfont2" *ngIf="!loading">There are currently <strong> {{getNumberOfOwners()}} Hodlers </strong> in total with Punk Pairs (Click Address list to see more)</p>
 <br>
 
 <mat-grid-list cols="{{cols >= 4 ? 2 : 1}}">
@@ -108,7 +108,7 @@
             <br>
             <br>
             <p *ngIf="!validPunkOnForm">Punk is not a valid Cryptopunk Pair</p>
-            <p *ngIf="validPunkOnForm">Punk token id #{{validPunkOnForm}} inputted is a valid token pair owned by {{getPunkOwner(validPunkOnForm)}}</p>
+            <p *ngIf="validPunkOnForm && getPunkOwner(validPunkOnForm) !== '0x0000000000000000000000000000000000000000'">Punk token id #{{validPunkOnForm}} inputted is a valid token pair owned by {{getPunkOwner(validPunkOnForm)}}</p>
   </mat-card>
 <h1 class="pinkback">Support the project</h1>
 

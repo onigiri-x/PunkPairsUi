@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "punkpairs-e936e"
-  }
+    "default": "punkpairs-2cdc3",
+    "stage": "punkpairs-2cdc3"
+  },
+  "targets": {},
+  "etags": {}
 }
