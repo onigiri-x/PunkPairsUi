@@ -13,9 +13,14 @@ yarn-error.log
 
 # IDEs and editors
 .idea/
+/.idea
 .project
 .github/*
-.firebase/*
+/.github/*
+/.github
+.firebase/**/*
+/.firebase
+/.firebase/*
 .classpath
 .c9/
 *.launch
@@ -23,7 +28,7 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
+.vscode/**/*
 .history/*
 
 # Miscellaneous
