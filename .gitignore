@@ -14,9 +14,8 @@ yarn-error.log
 # IDEs and editors
 .idea/
 .project
-.vscode/
-.github/
-.firebase/
+.github/*
+.firebase/*
 .classpath
 .c9/
 *.launch
@@ -25,10 +24,6 @@ yarn-error.log
 
 # Visual Studio Code
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 .history/*
 
 # Miscellaneous
