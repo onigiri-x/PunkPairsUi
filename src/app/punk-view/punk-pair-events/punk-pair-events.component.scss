@@ -1,0 +1,49 @@
+.fullwidthcard {
+    box-shadow: inset 0 0 100px hsla(0,0%,0%,.3);
+    margin: 10px;
+    font-family: Montserrat,sans-serif !important;
+}
+
+
+.p {
+  font-family: "Monaco";
+}
+
+.mat-grid-tile {
+  line-height: 45px;
+}
+
+.whitecolor{
+  color: white;
+}
+
+.img-setting{
+   object-fit: cover;
+    min-width: 100px;
+    max-width: 200px;
+    height: auto;
+}
+.rightfont {
+  font-family: Montserrat,sans-serif !important;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.fix-container {
+  height: 600px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-grid-list {
+  padding-bottom: 18% !important;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .mat-grid-list {
+    width: 1400px;
+  }
+}

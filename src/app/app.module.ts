@@ -22,12 +22,14 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {OwnerDialogComponent} from "./punk-view/owner-dialog/owner-dialog.component";
+import {PunkPairEventsComponent} from "./punk-view/punk-pair-events/punk-pair-events.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PunkViewComponent,
     PunkTileComponent,
+    PunkPairEventsComponent,
     PunkDialogComponent,
     OwnerDialogComponent
   ],
@@ -57,7 +59,7 @@ import {OwnerDialogComponent} from "./punk-view/owner-dialog/owner-dialog.compon
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental2',
+            uri: 'https://api.thegraph.com/subgraphs/name/onigiri-x/experimental3',
           }),
         };
       },
