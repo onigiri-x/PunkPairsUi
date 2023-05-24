@@ -23,6 +23,7 @@ import {PunkDialogComponent} from "./punk-view/punk-dialog/punk-dialog.component
 import {MatExpansionModule} from "@angular/material/expansion";
 import {OwnerDialogComponent} from "./punk-view/owner-dialog/owner-dialog.component";
 import {PunkPairEventsComponent} from "./punk-view/punk-pair-events/punk-pair-events.component";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {PunkPairEventsComponent} from "./punk-view/punk-pair-events/punk-pair-ev
         ReactiveFormsModule,
         MatFormFieldModule,
         MatButtonModule,
-        MatExpansionModule
+        MatExpansionModule,
+        FlexLayoutModule
     ],
   providers: [
         {
