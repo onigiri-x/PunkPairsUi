@@ -1,9 +1,9 @@
 <mat-card class="fix-container">
-  <div *ngFor="let pairevent of punkPairingEvents; let i=index" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-    <div fxFlex="25">
+  <div *ngFor="let pairevent of punkPairingEvents; let i=index" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+    <div fxFlex="25" fxFlex.lt-md="100">
       <img class="img-setting" [src]="getPunkPic(pairevent.punkId)">
     </div>
-    <div fxFlex="75">
+    <div fxFlex="75" class="rightfont">
       <p *ngIf="pairevent.wasPaired">Punk Pairing Event! 💪 <span ></span></p>
       <p *ngIf="!pairevent.wasPaired">Punk Un-Pairing Event 🤡</p>
       <p><strong>Punk #{{pairevent.punkId}}</strong></p>

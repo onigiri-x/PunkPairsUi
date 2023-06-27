@@ -21,6 +21,7 @@
    object-fit: cover;
     min-width: 100px;
     max-width: 200px;
+    width: 100%;
     height: auto;
 }
 .rightfont {
@@ -45,5 +46,24 @@
 @media screen and (min-width: 768px) {
   .mat-grid-list {
     width: 1400px;
+  }
+  .img-setting {
+    height: 200px;  /* adjust as necessary */
+  }
+  .rightfont {
+    margin-top: 20px;  /* adjust as necessary */
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .img-setting {
+    width: 80%;  /* adjust as necessary */
+    height: auto;
+    margin: auto;  /* center the image */
+  }
+
+  .rightfont {
+    margin-top: 20px;  /* adjust as necessary */
+    font-size: 14px;  /* adjust as necessary */
   }
 }
